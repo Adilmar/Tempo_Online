@@ -10,6 +10,9 @@ public class Tempo {
 
     @Expose
     private Location location;
+    @Expose
+    private Current current;
+
 
     public class Location {
         @Expose
@@ -91,6 +94,31 @@ public class Tempo {
 
         public void setLocaltime_epoch(String localtime_epoch) {
             this.localtime_epoch = localtime_epoch;
+        }
+    }
+
+    public class Current{
+
+        @Expose
+        private String temp_c;
+        @Expose
+        private String humidity;
+
+
+        public String getTemp_c() {
+            return temp_c;
+        }
+
+        public void setTemp_c(String temp_c) {
+            this.temp_c = temp_c;
+        }
+
+        public String getHumidity() {
+            return humidity;
+        }
+
+        public void setHumidity(String humidity) {
+            this.humidity = humidity;
         }
     }
 }
