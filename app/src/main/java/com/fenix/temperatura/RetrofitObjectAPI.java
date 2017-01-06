@@ -13,5 +13,5 @@ public interface RetrofitObjectAPI {
      * And our method that will return us details of student.
     */
     @GET("v1/current.json?key=89ca93b7b33340098a9112523170501&q=Paris")
-    Call<Current> getCurrentDetails();
+    Call<Result> getCurrentDetails();
 }

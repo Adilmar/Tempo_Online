@@ -77,11 +77,11 @@ public class Main extends AppCompatActivity {
 
         RetrofitObjectAPI service = retrofit.create(RetrofitObjectAPI.class);
 
-        Call<Current> call = service.getCurrentDetails();
+        Call<Result> call = service.getCurrentDetails();
 
-        call.enqueue(new Callback<Current>() {
+        call.enqueue(new Callback<Result>() {
             @Override
-            public void onResponse(Response<Current> response, Retrofit retrofit) {
+            public void onResponse(Response<Result> response, Retrofit retrofit) {
 
                 try {
 
