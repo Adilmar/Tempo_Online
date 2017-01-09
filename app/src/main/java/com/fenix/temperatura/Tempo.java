@@ -14,6 +14,22 @@ public class Tempo {
     private Current current;
 
 
+    public Current getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Current current) {
+        this.current = current;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     public class Location {
         @Expose
         private String name;
@@ -99,11 +115,22 @@ public class Tempo {
 
     public class Current{
 
+
+        @Expose
+        private Condition condition;
+
         @Expose
         private String temp_c;
         @Expose
         private String humidity;
 
+        public Condition getCondition() {
+            return condition;
+        }
+
+        public void setCondition(Condition condition) {
+            this.condition = condition;
+        }
 
         public String getTemp_c() {
             return temp_c;
@@ -120,5 +147,31 @@ public class Tempo {
         public void setHumidity(String humidity) {
             this.humidity = humidity;
         }
+
+
+        public class Condition{
+            @Expose
+            private String text;
+            @Expose
+            private String icon;
+
+            public String getIcon() {
+                return icon;
+            }
+
+            public void setIcon(String icon) {
+                this.icon = icon;
+            }
+
+            public String getText() {
+                return text;
+            }
+
+            public void setText(String text) {
+                this.text = text;
+            }
+        }
+
+
     }
 }

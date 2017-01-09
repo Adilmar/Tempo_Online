@@ -13,35 +13,37 @@
     tools:context="com.fenix.temperatura.Main"
     tools:showIn="@layout/activity_main">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Previsão"
-        android:layout_marginTop="150dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/RetrofitArray" />
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Previsão"-->
+        <!--android:layout_marginTop="150dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:id="@+id/RetrofitArray" />-->
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tempo Real"
-        android:layout_marginTop="230dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/RetrofitObject" />
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Tempo Real"-->
+        <!--android:layout_marginTop="230dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:id="@+id/RetrofitObject" />-->
 
     <TextView
         android:id="@+id/text_id_1"
         android:layout_marginTop="150dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:text="Umidade"/>
 
     <TextView
         android:id="@+id/text_id_2"
         android:layout_marginTop="300dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:text=""/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,6 +51,7 @@
         android:layout_marginTop="120dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/text_name_1"
+        android:text="Temperatura"
         />
 
     <TextView
@@ -57,6 +60,7 @@
         android:layout_marginTop="270dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/text_name_2"
+        android:text=""
         />
 
     <TextView
@@ -65,6 +69,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="240dp"
         android:id="@+id/text_marks_1"
+        android:text=""
         />
 
     <TextView
@@ -73,6 +78,26 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
         android:id="@+id/text_marks_2"
+        android:text="Uberlândia"
+        android:textStyle="bold"
         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"
+        android:id="@+id/url"
+        android:visibility="gone"
+        android:textStyle="bold"
+        />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>
