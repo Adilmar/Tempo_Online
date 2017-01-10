@@ -19,6 +19,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+
+        <activity
+            android:name="com.fenix.temperatura.Main"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
     </application>
 
 </manifest>

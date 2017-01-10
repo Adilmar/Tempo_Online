@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="@mipmap/fbusca">
 
 
     <LinearLayout
@@ -13,15 +14,21 @@
 
         <android.support.v7.widget.SearchView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.SearchView>
+            android:layout_height="match_parent"
+            android:layout_marginTop="120dp"
+            android:id="@+id/cbusca">
+
+        </android.support.v7.widget.SearchView>
 
     </LinearLayout>
 
     <Button
-        android:text="Button"
+        android:text="@string/pesquisar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button2" />
+        android:id="@+id/bbuscar"
+        android:layout_marginTop="120dp"
+        android:background="#b9de93"/>
 
 
 </LinearLayout>

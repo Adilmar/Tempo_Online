@@ -1,5 +1,6 @@
 package com.fenix.temperatura;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -63,19 +64,18 @@ public class Main extends AppCompatActivity implements LoadImageTask.Listener {
         text_marks_2 = (TextView) findViewById(R.id.text_marks_2);
 
         String url = "https://www.gstatic.com/webp/gallery3/1.sm.png";
-        //new AsyncTaskLoadImage(imageView).execute(url);
-
-
-//      Button ButtonObject= (Button) findViewById(R.id.RetrofitObject);
 
         getRetrofitObject();
+
+        Intent intent = getIntent();
+        final String cidade = intent.getStringExtra("cidade");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, cidade, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });

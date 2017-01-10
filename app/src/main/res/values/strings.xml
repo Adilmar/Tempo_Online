@@ -2,5 +2,5 @@
     <string name="app_name">Tempo Online</string>
     <string name="action_settings">Opções</string>
     <string name="pesquisa_t">Digite o nome da cidade</string>
-    <string name="pesquisar">Pesquisar</string>
+    <string name="pesquisar">Buscar</string>
 </resources>
