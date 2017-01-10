@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,24 +21,33 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class Main extends AppCompatActivity implements LoadImageTask.Listener{
+public class Main extends AppCompatActivity implements LoadImageTask.Listener {
 
     String url = "http://api.apixu.com/";
-    TextView text_id_1, text_name_1, text_marks_1,imagem;
+    TextView text_id_1, text_name_1, text_marks_1, imagem;
     TextView text_id_2, text_name_2, text_marks_2;
-    public static final String IMAGE_URL = "http://cdn.apixu.com/weather/64x64/day/113.png";
+    //public static final String IMAGE_URL = "http://cdn.apixu.com/weather/64x64/day/113.png";
+
+    public String codigo;
+
+    //background dinamico
+    //LinearLayout  vi = (LinearLayout) findViewById(R.id.tela);
+
+    public View someView;
 
     //imagem viewer
     public ImageView mImageView;
     public ImageView imageView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mImageView = (ImageView) findViewById(R.id.imageView);
-        imageView = (ImageView)findViewById(R.id.imageView);
+        imageView = (ImageView) findViewById(R.id.imageView);
+
+        View someView = findViewById(R.id.tela);
+        //someView.setBackgroundResource(R.mipmap.tchuva);
 
         imagem = (TextView) findViewById(R.id.url);
 
@@ -60,18 +70,6 @@ public class Main extends AppCompatActivity implements LoadImageTask.Listener{
 
         getRetrofitObject();
 
-
-//
-//        ButtonObject.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                View VisibleArray = findViewById(R.id.RetrofitArray);
-//                VisibleArray.setVisibility(View.GONE);
-//                View VisibleObject = findViewById(R.id.RetrofitObject);
-//                VisibleObject.setVisibility(View.GONE);
-//                getRetrofitObject();
-//            }
-//        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -101,8 +99,17 @@ public class Main extends AppCompatActivity implements LoadImageTask.Listener{
             public void onResponse(Response<Tempo> response, Retrofit retrofit) {
 
                 try {
-                    new AsyncTaskLoadImage(imageView).execute("http:"+response.body().getCurrent().getCondition().getIcon());
-                    imagem.setText("http:"+response.body().getCurrent().getCondition().getIcon());
+                    codigo = response.body().getCurrent().getCondition().getCode();
+
+                    if (codigo.equals("1180") || codigo.equals("1186") || codigo.equals("1189") ||
+                            codigo.equals("1192") || codigo.equals("1195")) {
+
+                        someView.setBackgroundResource(R.mipmap.tchuva);
+
+                    }
+
+                    new AsyncTaskLoadImage(imageView).execute("http:" + response.body().getCurrent().getCondition().getIcon());
+                    imagem.setText("http:" + response.body().getCurrent().getCondition().getIcon());
                     text_name_1.setText("Temperatura  :  " + response.body().getCurrent().getTemp_c());
                     text_id_1.setText("Umidade  :  " + response.body().getCurrent().getHumidity());
 
@@ -120,10 +127,6 @@ public class Main extends AppCompatActivity implements LoadImageTask.Listener{
                 Log.d("onFailure", t.toString());
             }
         });
-
-        //String teste = (String) imagem.getText();
-        //new LoadImageTask(this).execute(IMAGE_URL);
-
 
     }
 

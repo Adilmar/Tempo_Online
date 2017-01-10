@@ -15,6 +15,6 @@ public interface RetrofitArrayAPI {
      * And our method that will return us details of student.
     */
     @GET("api/RetrofitAndroidArrayResponse")
-    Call<List<Student>> getStudentDetails();
+    Call<List<Tempo>> getStudentDetails();
 
 }
