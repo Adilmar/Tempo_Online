@@ -1,8 +1,8 @@
 package com.fenix.temperatura;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -22,33 +23,32 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class Main extends AppCompatActivity implements LoadImageTask.Listener {
+public class Main extends AppCompatActivity implements TextToSpeech.OnInitListener {
 
     String url = "http://api.apixu.com/";
+
     TextView text_id_1, text_name_1, text_marks_1, imagem;
     TextView text_id_2, text_name_2, text_marks_2;
-    //public static final String IMAGE_URL = "http://cdn.apixu.com/weather/64x64/day/113.png";
 
     public String codigo;
-
-    //background dinamico
-    //LinearLayout  vi = (LinearLayout) findViewById(R.id.tela);
-
     public View someView;
-
-    //imagem viewer
-    public ImageView mImageView;
     public ImageView imageView;
+    public String cidade;
+
+    public String frase;
+
+    private TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mImageView = (ImageView) findViewById(R.id.imageView);
+
+        tts = new TextToSpeech(this, this);
+
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        View someView = findViewById(R.id.tela);
-        //someView.setBackgroundResource(R.mipmap.tchuva);
+        someView = findViewById(R.id.tela);
 
         imagem = (TextView) findViewById(R.id.url);
 
@@ -63,12 +63,12 @@ public class Main extends AppCompatActivity implements LoadImageTask.Listener {
         text_name_2 = (TextView) findViewById(R.id.text_name_2);
         text_marks_2 = (TextView) findViewById(R.id.text_marks_2);
 
-        String url = "https://www.gstatic.com/webp/gallery3/1.sm.png";
+        Intent intent = getIntent();
+        cidade = intent.getStringExtra("cidade");
+
+        text_marks_2.setText(cidade);
 
         getRetrofitObject();
-
-        Intent intent = getIntent();
-        final String cidade = intent.getStringExtra("cidade");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -91,7 +91,7 @@ public class Main extends AppCompatActivity implements LoadImageTask.Listener {
 
         RetrofitObjectAPI service = retrofit.create(RetrofitObjectAPI.class);
 
-        Call<Tempo> call = service.getCurrentDetails();
+        Call<Tempo> call = service.getCurrentDetails(cidade);
 
 
         call.enqueue(new Callback<Tempo>() {
@@ -101,15 +101,15 @@ public class Main extends AppCompatActivity implements LoadImageTask.Listener {
                 try {
                     codigo = response.body().getCurrent().getCondition().getCode();
 
+
                     if (codigo.equals("1180") || codigo.equals("1186") || codigo.equals("1189") ||
-                            codigo.equals("1192") || codigo.equals("1195")) {
+                            codigo.equals("1192") || codigo.equals("1195") || codigo.equals("1183")) {
 
                         someView.setBackgroundResource(R.mipmap.tchuva);
 
                     }
 
                     new AsyncTaskLoadImage(imageView).execute("http:" + response.body().getCurrent().getCondition().getIcon());
-                    imagem.setText("http:" + response.body().getCurrent().getCondition().getIcon());
                     text_name_1.setText("Temperatura  :  " + response.body().getCurrent().getTemp_c());
                     text_id_1.setText("Umidade  :  " + response.body().getCurrent().getHumidity());
 
@@ -152,16 +152,47 @@ public class Main extends AppCompatActivity implements LoadImageTask.Listener {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onImageLoaded(Bitmap bitmap) {
-
-        mImageView.setImageBitmap(bitmap);
-    }
 
     @Override
-    public void onError() {
-        Toast.makeText(this, "Error Loading Image !", Toast.LENGTH_SHORT).show();
+    public void onInit(int status) {
+        // TODO Auto-generated method stub
+        //TTS is successfully initialized
+        if (status == TextToSpeech.SUCCESS) {
+            //Setting speech language
+            int result = tts.setLanguage(new Locale("pt"));
+            speakOut();
+            //tts.speak(teste, TextToSpeech.QUEUE_FLUSH, null);
+            //If your device doesn't support language you set above
+            if (result == TextToSpeech.LANG_MISSING_DATA
+                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                //Cook simple toast message with message
+                Toast.makeText(this, "Language not supported", Toast.LENGTH_LONG).show();
+                Log.e("TTS", "Language is not supported");
+            }
+            //Enable the button - It was disabled in main.xml (Go back and Check it)
+            else {
+                //btnSpeak.setEnabled(true);
+            }
+            //TTS is not initialized properly
+        } else {
+            Toast.makeText(this, "TTS Initilization Failed", Toast.LENGTH_LONG).show();
+            Log.e("TTS", "Initilization Failed");
+        }
+    }
+
+    private void speakOut() {
+        //Get the text typed
+
+        tts.speak("Previsão do tempo agora em: "+String.valueOf(text_marks_2.getText()), TextToSpeech.QUEUE_FLUSH, null);
     }
 
 
+    public void onDestroy() {
+        // Don't forget to shutdown!
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
 }
